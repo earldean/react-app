@@ -3,10 +3,10 @@ import BenefitsCalculator from './components/BenefitsCalculator';
 
 const props = {
     /** Number of pay checks employee receives per year*/
-    employeeAnnualPayPeriods: 26,
+    numberOfPayPeriods: 26,
 
-    /** An Emplyee's pay check amount for each par period */
-    grossEmployeePayCheck: 2000,
+    /** An Employee's pay check amount for each par period */
+    payCheckAmount: 2000,
 
     /** Cost of an employees benefit package paid by employer per year */
     employeeAnnualBenefitCost: 1000,
@@ -15,7 +15,10 @@ const props = {
     dependentAnnualBenefitCost: 500,
 
     /** Anyone (Employee or dependent whos name starts with a receives a discount */
-    annualBenefitDiscount: 0.1
+    benefitsDiscount: 0.10,
+
+    /** First letter of name to apply discount to */
+    characterForDiscount: 'a'
 };
 
 class App extends Component {
