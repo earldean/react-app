@@ -4,6 +4,8 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import EmployeeInput from './EmployeeInput';
+
 
 class BenefitsCalculator extends Component {
 
@@ -45,7 +47,10 @@ class BenefitsCalculator extends Component {
                 lastName: ""
             },
 
-            dependents: []
+            dependents: [],
+
+            /** Used to check if an employee has been added - if so do not render add employee form */
+            employeeAdded: false
         };
 
         this.addEmployee = this.addEmployee.bind(this);
@@ -69,7 +74,8 @@ class BenefitsCalculator extends Component {
         this.setState({
             employee: employee,
             annualBenefitCost: benefitCost,
-            totalAnnualCost: this.state.annualGrossSalary + benefitCost
+            totalAnnualCost: this.state.annualGrossSalary + benefitCost,
+            employeeAdded: true
         });
     };
 
@@ -114,34 +120,41 @@ class BenefitsCalculator extends Component {
         return (
             <div className="container">
                 <div className="row d-flex justify-content-between my-4 ">
-                    <div id="employeeInputCard" className="card col-md-4">
-                        <div id="employeeInputCardBody" className="card-body">
-                            <form id="employeeForm" onSubmit={(event) => { this.addEmployee(event) }}>
-                                <div className="form-group">
-                                    <label htmlFor="employeeFirstName">Employee first name </label>
-                                    <input id="employeeFirstName" name="firstName" type="text" className="form-control"
-                                           placeholder="Lloyd" required="true"/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="employeeLastName"> Employee last name </label>
-                                    <input id="employeeLastName" type="text" name="lastName" className="form-control"
-                                           placeholder="Christmas" />
-                                </div>
-                                <input className="btn btn-outline-primary" type="submit" value="Add employee" />
-                            </form>
-                        </div>
-                    </div>
+
+                    <EmployeeInput addEmployee={this.addEmployee}/>
+
                     <div className="card col-md-6">
                         <div className="card-body">
-                            <p className="text-success text-monospace">
-                                <strong>Annual benefits cost ${this.state.annualBenefitCost}</strong>
-                            </p>
-                            <p className="text-info text-monospace">
-                                <strong>Annual salary ${this.state.annualGrossSalary}</strong>
-                            </p>
-                            <p className="text-success text-monospace">
-                                <strong>Total annual cost ${this.state.totalAnnualCost}</strong>
-                            </p>
+
+                            <div>
+                                <p className="text-primary text-monospace">
+                                    Empolyee {this.state.employee.firstName} {this.state.employee.lastName}
+                                </p>
+
+                                <p className="text-primary text-monospace"> Dependents </p>
+                                <ul>
+                                    {
+                                        this.state.dependents.map((dependent) => {
+                                            return <li className="text-primary text-monospace">
+                                                {dependent.firstName} {dependent.lastName}
+                                                </li>
+                                        })
+                                    }
+
+                                </ul>
+                            </div>
+
+                            <div>
+                                <p className="text-success text-monospace">
+                                    <strong>Annual benefits cost ${this.state.annualBenefitCost}</strong>
+                                </p>
+                                <p className="text-info text-monospace">
+                                    <strong>Annual salary ${this.state.annualGrossSalary}</strong>
+                                </p>
+                                <p className="text-success text-monospace">
+                                    <strong>Total annual cost ${this.state.totalAnnualCost}</strong>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -157,7 +170,7 @@ class BenefitsCalculator extends Component {
                                 <div className="form-group">
                                     <label htmlFor="dependentLastName"> Dependents last name </label>
                                     <input id="dependentLastName" type="text" className="form-control"
-                                           name="lastName"/>
+                                           name="lastName" required="true"/>
                                 </div>
                                 <input className="btn btn-outline-primary" type="submit" value="Add dependent" />
                             </form>
