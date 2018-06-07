@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import EmployeeInput from './EmployeeInput';
+import BenefitsRepositoryService from './BenefitsRepositoryService';
 
 
 class BenefitsCalculator extends Component {
@@ -158,7 +159,7 @@ class BenefitsCalculator extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row d-flex justify-content-between">
                     <div id="dependentInputCard" className="card col-md-4">
                         <div id="dependentInputCardBody" className="card-body">
                             <form id="dependentForm" onSubmit={(event) => { this.addDependent(event) }}>
@@ -176,6 +177,9 @@ class BenefitsCalculator extends Component {
                             </form>
                         </div>
                     </div>
+
+                    <BenefitsRepositoryService employee={this.state.employee} dependents={ this.state.dependents }/>
+
                 </div>
             </div>
         )
